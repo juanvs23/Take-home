@@ -2,7 +2,11 @@
 
 Sitio web estático de **Alta Pinta** que lee el menú desde Google Sheets, permite armar un carrito y envía las órdenes a la hoja de pedidos vía Google Apps Script.
 
-> **🔴 Live**: URL pendiente de despliegue (se agrega aquí cuando se publique).
+> **🔴 Live**: [alta-pinta.coltmandev.dev](https://alta-pinta.coltmandev.dev/)
+
+<p align="center">
+  <img src="docs/img/site-menu.jpg" alt="Vista del menú de Alta Pinta con productos cargados" width="100%" />
+</p>
 
 ---
 
@@ -50,26 +54,97 @@ Identidad **Starbucks** (getdesign) adaptada con el color de marca del logo (ver
 
 ---
 
-## 🏗️ Arquitectura (Screaming Architecture)
+## 🗂️ Estructura del proyecto (completa)
+
+Arquitectura **Screaming Architecture**: la estructura grita el dominio, no la tecnología. `domain/` es lógica pura (testeable), `app/` orquesta la UI, `infrastructure/` aísla el mundo exterior.
 
 ```
-src/
-├── domain/         # Lógica pura (sin framework ni DOM) — unit-tested
-│   ├── menu/       # MenuItem, PriceTier, parseMenuEntry, fetchMenu
-│   ├── cart/       # CartItem, add/remove/qty, totales (centavos), createCartStore
-│   └── order/      # OrderPayload/Result, validateOrder, buildOrderPayload, postOrder
-├── app/            # Presentación + orquestación client-side
-│   ├── layout/BaseLayout.astro
-│   ├── components/ # Header, Hero, MenuGrid, CartDrawer, FrapButton, OrderSuccessModal, Footer
-│   ├── island.ts   # initIsland() — conecta dominio con DOM
-│   └── styles/global.css  # design tokens + Tailwind @theme
-├── infrastructure/ # Adaptadores del mundo exterior
-│   ├── env.ts      # PUBLIC_SHEETS_URL tipado + fail-visible
-│   └── sheets/     # Code.gs + appsscript.json (el bridge GAS)
-└── pages/index.astro
+Take-home/
+├── AGENTS.md / CLAUDE.md     # Instrucciones de desarrollo para agentes AI
+├── DESIGN.md                 # Sistema de diseño (tokens, colores, tipografía, componentes)
+├── README.md                 # Este archivo (descripción + guía)
+├── astro.config.mjs          # Config de Astro (Tailwind v4 vía Vite)
+├── package.json              # Dependencias y scripts (dev/build/test/e2e/astro)
+├── playwright.config.ts      # Config de Playwright (e2e)
+├── vitest.config.ts          # Config de Vitest (tests unit de dominio)
+├── tsconfig.json             # TypeScript (strict)
+├── .env.example              # Plantilla: PUBLIC_SHEETS_URL (la URL del Web App)
+│
+├── src/                      # Código fuente
+│   ├── domain/               # 📚 LÓGICA DE NEGOCIO pura — sin framework ni DOM — unit-tested
+│   │   ├── menu/             #   Modelo y acceso al catálogo: MenuItem, PriceTier, parseMenuEntry, fetchMenu
+│   │   │   ├── MenuItem.ts   #   Tipos del menú (MenuItem, PriceTier)
+│   │   │   ├── menu.ts       #   parseMenuEntry + fetchMenu (normaliza/valida/obtiene el menú)
+│   │   │   └── menu.test.ts  #   Tests del menú
+│   │   ├── cart/             #   Modelo y lógica del carrito
+│   │   │   ├── CartItem.ts   #   Tipo CartItem
+│   │   │   ├── cart.ts       #   add/remove/setQty, totales (aritmética en centavos)
+│   │   │   ├── store.ts      #   Store reactivo mínimo (vanilla, con persistencia localStorage)
+│   │   │   └── cart.test.ts  #   Tests del carrito
+│   │   └── order/            #   Modelo y lógica del pedido
+│   │       ├── types.ts      #   OrderPayload / OrderResult
+│   │       ├── order.ts      #   validateOrder, buildOrderPayload, postOrder
+│   │       └── order.test.ts #   Tests del pedido
+│   │
+│   ├── app/                  # 🎨 PRESENTACIÓN + orquestación client-side
+│   │   ├── layout/           #   BaseLayout.astro (html, head, meta, favicon, lang=es)
+│   │   │   └── BaseLayout.astro
+│   │   ├── components/       #   Componentes Astro reutilizables (server-rendered)
+│   │   │   ├── Header.astro          # Marca + logo + tagline
+│   │   │   ├── Hero.astro            # Título de página ("Nuestro menú")
+│   │   │   ├── MenuGrid.astro        # Grid de productos + skeleton + estado de error
+│   │   │   ├── CartDrawer.astro      # Drawer lateral del carrito + checkout (nombre/email)
+│   │   │   ├── FrapButton.astro      # Botón flotante de carrito (elemento firma)
+│   │   │   ├── OrderSuccessModal.astro  # Modal de confirmación post-compra
+│   │   │   └── Footer.astro          # Bookend House Green + enlace al repo
+│   │   ├── island.ts         #   initIsland(): conecta dominio con DOM (fetch, render, eventos)
+│   │   └── styles/           #   global.css — design tokens (Starbucks) + Tailwind @theme
+│   │       └── global.css
+│   │
+│   ├── infrastructure/       # 🔌 ADAPTADORES del mundo exterior
+│   │   ├── env.ts            #   PUBLIC_SHEETS_URL tipado + fail-visible
+│   │   └── sheets/           #   El puente con Google (Apps Script)
+│   │       ├── Code.gs       #   doGet (lee menú) / doPost (agrega orden) — backend defensivo
+│   │       └── appsscript.json  #   Manifest: executeAs=Me, acceso Anyone, oauthScopes
+│   │
+│   └── pages/
+│       └── index.astro       #   Página única: Header + Hero + MenuGrid + Footer + Frap + Drawer + Modal
+│
+├── apps-script/              # Mirror del proyecto Apps Script (para deploy con clasp)
+│   ├── Code.js               #   Mismo código que src/infrastructure/sheets/Code.gs
+│   ├── appsscript.json       #   Manifest (idéntico)
+│   └── .clasp.json           #   Conexión local→proyecto Apps Script (scriptId)
+│
+├── public/                   # Archivos estáticos servidos tal cual
+│   ├── favicon.ico / favicon.svg  # Favicon con el logo de la marca
+│   ├── logo-pizzería-minimalista.svg|webp|png  # Logo de Alta Pinta (3 formatos)
+│   └── img/                  # Imágenes de producto (pz-*, beb-*, pos-*.jpg)
+│
+├── sheets/                   # Datos base (CSV delimitados con ";") para poblar Google Sheets
+│   ├── config.csv            # rubro, marca, moneda, slogan, logo
+│   ├── categorias.csv        # id, nombre, orden
+│   ├── menu.csv              # 15 productos (precio + tipos JSON escalonados)
+│   └── ordenes.csv           # esquema de pedidos
+│
+├── e2e/                      # Tests end-to-end (Playwright)
+│   ├── site.spec.ts          # Flujo completo contra el Web App real
+│   └── cart-ux.spec.ts       # UX del carrito (fetch mockeado): drawer, stepper, cantidad, eliminar
+│
+├── docs/                     # 📄 DOCUMENTACIÓN DEL PROYECTO
+│   ├── context.md            # Contexto, stack, arquitectura, decisiones
+│   ├── roadmap.md            # Fases SDD, hitos, pendientes
+│   ├── chat.md               # 📝 Log completo de chats/decisiones (cómo se construyó) — ¡visible!
+│   ├── apps-script-setup.md  # Guía paso a paso del deploy del Apps Script
+│   └── img/site-menu.jpg     # Captura del sitio con productos cargados
+│
+├── openspec/                 # SDD con OpenSpec
+│   ├── config.yaml           # Config del spec (test runner, reglas)
+│   └── changes/pizza-menu-orders/
+│       └── spec.md           # Especificación del cambio (requisitos, escenarios)
+└── node_modules/             # Dependencias (no versionado)
 ```
 
-La **lógica de negocio vive en `domain/`** (pura y testeable); `app/` solo orquesta la UI; `infrastructure/` aísla el mundo exterior (env, Google).
+> 📌 **`docs/chat.md`** es el registro vivo de cómo se tomó cada decisión del proyecto — la trazabilidad completa del proceso de construcción. Se mantiene actualizado con cada intercambio.
 
 ---
 

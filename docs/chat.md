@@ -1152,3 +1152,22 @@ Archivos: `src/app/components/OrderSuccessModal.astro` (nuevo), `src/pages/index
 - Todo el trabajo (footer + README + favicon) quedó en el commit `74212c7` y se pusheó. Estado limpio tras el push.
 
 Este commit reemplaza el "Initial commit from Astro" (borró Welcome/assets del starter).
+
+---
+
+## 2026-08-28 — Plugin de Vercel para agentes (próximos proyectos)
+
+### Usuario
+> añade esto: `npx plugins add vercel/vercel-plugin` para próximos proyectos.
+
+### Asistente
+Ejecutado e instalado. **`npx plugins add vercel/vercel-plugin`**.
+
+- Qué es: plugin de **Vercel para agentes AI** (Claude Code, Cursor, Copilot CLI, Codex, Grok, Kimi). No es un comando de Vercel CLI.
+- Qué aporta: **knowledge graph** del ecosistema Vercel + librería de **35 skills** (deployments, env-vars, auth, ai-sdk, cdn-caching, etc.), 5 cmds, 3 agents, hooks, MCP.
+- Instalado en: `~/.cache/plugins/github.com-vercel-vercel-plugin` · Target: **Visual Studio Code** (scope user).
+- Prerequisitos (ya estaban): Node 18+ ✅ (v24) y Bun ✅ (1.4.0).
+- Nota: el comando es **interactivo** (pide "Install? [Y/n]") — se responde con `printf 'Y\n' |`.
+- ⚠️ **Reiniciar VS Code/la herramienta de agente** para que el plugin se cargue.
+
+Útil para el **deploy a Vercel** de próximos proyectos.
