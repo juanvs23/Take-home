@@ -15,7 +15,7 @@ Sitio Astro **estático** de una página: menú de pizzas desde Google Sheets, c
 | Tasks | ✅ | Implementado con TDD (28 unit + 3 e2e) |
 | Apply | ✅ | Screaming Architecture implementada, compila limpio |
 | Verify | ✅ | 28 unit tests + 3 e2e tests pasando |
-| Archive + Deploy | ⏳ | Vercel, README con pasos de pizza + URL live |
+| Archive + Deploy | ✅ | Live en alta-pinta.coltmandev.dev · repo github.com/juanvs23/Take-home |
 
 ## Decisiones de Exploración (AD)
 - AD-1: Fetch client-side del menú
@@ -32,12 +32,14 @@ Sitio Astro **estático** de una página: menú de pizzas desde Google Sheets, c
 |------|----------------|--------|
 | Exploración completa | 2026-08-28 | ✅ |
 | Proposal aprobado | 2026-08-28 | ✅ |
-| Implementación (TDD) | 2026-08-28 | ✅ (28 unit + 3 e2e) |
-| Apps Script desplegado | 2026-08-28 | ✅ (Web App v1.4, doGet/doPost OK) |
-| Deploy Vercel + URL live | TBD | ⏳ |
+| Implementación (TDD) | 2026-08-28 | ✅ (28 unit + e2e) |
+| Apps Script desplegado | 2026-08-28 | ✅ (Web App, doGet/doPost OK) |
+| Repo en GitHub | 2026-08-28 | ✅ (publico, commits por hito) |
+| Deploy + URL live | 2026-08-28 | ✅ https://alta-pinta.coltmandev.dev/ |
 
 ## Pendientes (usuario)
-- [ ] Desplegar en Vercel y agregar URL live al README
+- [x] Desplegar y agregar URL live al README
+- [ ] (Opcional) deploy formal a Vercel con el plugin instalado
 
 ## Dependencias y Riesgos
 - CORS POST: requiere smoke test con GAS desplegado

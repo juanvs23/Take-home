@@ -1171,3 +1171,28 @@ Ejecutado e instalado. **`npx plugins add vercel/vercel-plugin`**.
 - ⚠️ **Reiniciar VS Code/la herramienta de agente** para que el plugin se cargue.
 
 Útil para el **deploy a Vercel** de próximos proyectos.
+
+---
+
+## 2026-08-28 — MISIÓN CUMPLIDA · Cierre del proyecto
+
+### Usuario
+> perfecto misión cumplida archiva todo, terminamos por hoy.
+
+### Asistente
+**Estado final del proyecto Alta Pinta (Take-home):**
+
+- ✅ Objetivos cumplidos: menú desde Google Sheets, carrito client-side, órdenes vía Apps Script, 1 página estática.
+- ✅ Arquitectura: Screaming (domain | app | infrastructure), lógica pura testeada.
+- ✅ Calidad: 28 unit tests + e2e, `astro check` 0 errores, build estático OK.
+- ✅ Flujo end-to-end verificado: compra real → doPost → fila en `ordenes` (pizza-alta).
+- ✅ README completo (resumen, estructura de carpetas, imagen del proyecto, URL live).
+- ✅ Repo en GitHub: **github.com/juanvs23/Take-home** (público). Commits por hito.
+- ✅ Deploy live: **https://alta-pinta.coltmandev.dev/**
+- ✅ Favicon con el logo + footer con enlace al repo.
+
+**Nota técnica**: el aviso "Remove the public framework prefix" de Astro es un falso positivo — `PUBLIC_SHEETS_URL` es la URL del Web App público que el navegador necesita; NO es un secreto. Se mantiene como está.
+
+Pendiente opcional: deploy formal a Vercel (plugin instalado) — no bloquea el entregable.
+
+**Cierre de sesión.** 🎉
