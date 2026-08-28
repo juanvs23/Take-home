@@ -39,5 +39,6 @@
 
 ## Contactos y Recursos
 - Proyecto: /mnt/1TB/proyects/astro/Take-home (git init, "Initial commit from Astro")
+- **Repo GitHub**: https://github.com/juanvs23/Take-home (público, commit 74212c7)
 - Docs del proyecto: /mnt/1TB/proyects/astro/Take-home/docs/
 - Otros proyectos del workspace (no relacionados): astro-portfolio, portfolio

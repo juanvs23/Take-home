@@ -1121,3 +1121,34 @@ Archivos: `src/app/components/OrderSuccessModal.astro` (nuevo), `src/pages/index
 - ✅ Botón Aceptar cierra el modal
 - ✅ La orden se registró en Google Sheets (verificada: 24 filas, última = "Compra Modal Test", total 9, estado nueva)
 - `astro check` 0 errores · `vitest` 28/28
+
+---
+
+## 2026-08-28 — Favicon con logo + README completo + subida a GitHub
+
+### Usuario
+> no vale la pena, lo integro manual luego vemos el vercel cli y el repo... paso 1: cambia el favicon con el logo en la carpeta public (hay .png, .webp — eligí el que sirva). Vamos por el proceso normal, verifica si está el README solicitado en los objetivos (haz un resumen completo), luego sube el proyecto a mi GitHub (ya estás conectado a él), luego coloca en el footer un enlace al repo del proyecto, y vuelve a subir esos cambios.
+
+### Asistente
+**1. Favicon con el logo** ✅
+- Generado `public/favicon.ico` desde el PNG (64/48/32/16) con ImageMagick.
+- `public/favicon.svg` reemplazado por el logo vectorial.
+- `BaseLayout.astro`: `rel=icon` svg+xml + ico. (El logo webp ya se usaba como icon; se priorizó SVG+ICO que es lo correcto para favicon.)
+
+**2. README verificado y completado** ✅
+- Tenía inconsistencias (mencionaba `MenuCard/CartSummary/OrderForm` que ya no existen).
+- Reescrito con: **resumen completo** del proyecto (flujo Sheets→doGet→isla→carrito→doPost→ordenes), características, diseño, stack (Tailwind v4), arquitectura **real** (domain|app|infrastructure), setup, tests, deploy, y sección "Código fuente".
+
+**3. Subida a GitHub** ✅
+- Repo creado: **`juanvs23/Take-home`** → https://github.com/juanvs23/Take-home
+- Nota: el MCP `server-github` falló al crear el repo ("Authentication Failed") aunque el token tiene permisos. Se creó con la API directa (curl → POST /user/repos) usando el token de `~/.config/opencode/.env`.
+- Commit inicial `74212c7` + push de `master`.
+- `.gitignore`: añadido `.atl/` (cache de skill-registry de opencode).
+
+**4. Footer con enlace al repo** ✅
+- `Footer.astro`: enlace "Ver el código en GitHub ↗" → repo (target=_blank, rel noopener). Verificado en screenshot.
+
+**5. Re-subida** ✅
+- Todo el trabajo (footer + README + favicon) quedó en el commit `74212c7` y se pusheó. Estado limpio tras el push.
+
+Este commit reemplaza el "Initial commit from Astro" (borró Welcome/assets del starter).
