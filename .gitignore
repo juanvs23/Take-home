@@ -4,6 +4,16 @@ dist/
 # generated types
 .astro/
 
+# test output
+test-results/
+playwright-report/
+
+# temp scratch
+.tmp/
+
+# editor / tool registry cache
+.atl/
+
 # dependencies
 node_modules/
 

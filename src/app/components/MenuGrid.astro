@@ -1,0 +1,32 @@
+---
+// MenuGrid — grid de productos + skeleton loader + estado de error
+// El contenido (cards) lo genera la isla (island.ts) de forma dinámica.
+const SKELETON_COUNT = 6;
+---
+<section class="menu-section">
+	<div class="grid grid-cols-1 gap-4 w-full sm:grid-cols-2 lg:grid-cols-3" data-menu-grid aria-live="polite">
+		{
+			Array.from({ length: SKELETON_COUNT }).map(() => (
+				<div class="sk-card" data-menu-skeleton></div>
+			))
+		}
+	</div>
+	<p class="menu-error" data-menu-error hidden>
+		No se pudo cargar el menú. Comprueba que PUBLIC_SHEETS_URL esté configurada.
+	</p>
+</section>
+
+<style>
+	.menu-section { width: 100%; max-width: 1400px; margin: 0 auto; }
+	.sk-card {
+		width: 100%;
+		min-width: 100%;
+		aspect-ratio: 1;
+		border-radius: var(--radius-card);
+		background: linear-gradient(100deg, var(--ceramic) 40%, var(--cream) 50%, var(--ceramic) 60%);
+		background-size: 200% 100%;
+		animation: shimmer 1.4s infinite;
+	}
+	@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+	.menu-error { color: var(--red); font-weight: 600; }
+</style>

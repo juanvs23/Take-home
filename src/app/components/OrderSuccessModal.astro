@@ -1,0 +1,101 @@
+---
+// OrderSuccessModal — modal de felicitaciones tras una compra exitosa.
+// Lo abre el island (data-success-modal) cuando doPost responde {ok:true}.
+// Accesible: role=dialog, aria-modal, foco, overlay para cerrar.
+interface Props { title?: string; }
+const { title = '¡Gracias por tu pedido!' } = Astro.props;
+---
+<div class="success-backdrop" data-success-backdrop hidden></div>
+<div class="success-modal" data-success-modal role="dialog" aria-modal="true" aria-labelledby="success-title" aria-hidden="true" hidden>
+	<div class="success-card">
+		<div class="success-icon" aria-hidden="true">
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="40" height="40">
+				<path d="M20 6 9 17l-5-5" />
+			</svg>
+		</div>
+		<h2 class="success-title" id="success-title">{title}</h2>
+		<p class="success-subtitle">Tu orden fue registrada. La estamos preparando con mucho cariño. 🍕</p>
+		<p class="success-total">Total pagado: <strong data-success-total>$0.00</strong></p>
+		<button class="btn-primary" data-success-close>Aceptar</button>
+	</div>
+</div>
+
+<style>
+	.success-backdrop {
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.45);
+		z-index: 90;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s ease;
+	}
+	.success-backdrop.is-open { opacity: 1; pointer-events: auto; }
+	.success-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 95;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-4);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s ease;
+	}
+	.success-modal.is-open { opacity: 1; pointer-events: auto; }
+	.success-card {
+		background: var(--card);
+		border-radius: var(--radius-card);
+		padding: var(--space-6) var(--space-5);
+		box-shadow: var(--shadow-frap);
+		max-width: 420px;
+		width: 100%;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-3);
+	}
+	.success-icon {
+		width: 72px;
+		height: 72px;
+		border-radius: 50%;
+		background: var(--green-light);
+		color: var(--green-accent);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.success-title {
+		font-size: 1.5rem;
+		color: var(--green-siren);
+		margin: 0;
+	}
+	.success-subtitle {
+		color: var(--text-soft);
+		margin: 0;
+		line-height: 1.5;
+	}
+	.success-total {
+		color: var(--text-black);
+		font-size: 1.1rem;
+		margin: 0;
+	}
+	.success-total strong { color: var(--green-siren); }
+	.btn-primary {
+		margin-top: var(--space-2);
+		background: var(--green-accent);
+		color: var(--text-white);
+		font-size: 1rem;
+		font-weight: 700;
+		padding: 0.75rem 1.75rem;
+		min-height: 48px;
+		border-radius: var(--radius-pill);
+		border: none;
+		box-shadow: 0 0 6px rgba(0, 0, 0, 0.24), 0 8px 12px rgba(0, 0, 0, 0.14);
+		transition: transform 0.12s ease, background 0.12s ease;
+	}
+	.btn-primary:hover { background: var(--green-uplift); }
+	.btn-primary:active { transform: scale(0.95); }
+</style>

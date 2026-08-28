@@ -1,0 +1,140 @@
+---
+// CartDrawer — drawer lateral del carrito (modal slide) + checkout
+// El island lo conecta/rellena (data-cart-drawer, data-cart-list, form, etc.)
+---
+<div class="drawer-backdrop" data-drawer-backdrop hidden></div>
+<aside class="cart-drawer" data-cart-drawer aria-hidden="true" role="dialog" aria-label="Carrito">
+	<div class="drawer-header">
+		<h2 class="drawer-title">Tu pedido</h2>
+		<button class="drawer-close" data-drawer-close aria-label="Cerrar">✕</button>
+	</div>
+
+	<ul class="cart-list" data-cart-list>
+		<li class="cart-empty">Tu carrito está vacío. ¡Agrega una pizza!</li>
+	</ul>
+
+	<div class="drawer-footer" data-cart-footer hidden>
+		<div class="cart-total-row">
+			<span>Total</span>
+			<span class="cart-total" data-cart-total>$0.00</span>
+		</div>
+
+		<!-- Checkout: solo aquí el nombre y email -->
+		<form class="order-form" data-order-form novalidate>
+			<label class="field">
+				<span class="field-label">Nombre</span>
+				<input type="text" name="name" required placeholder="Tu nombre" data-field-name />
+			</label>
+			<label class="field">
+				<span class="field-label">Email</span>
+				<input type="email" name="email" required placeholder="tu@email.com" data-field-email />
+				<span class="field-error" data-error-email hidden>Email inválido</span>
+			</label>
+			<button type="submit" class="btn-primary" data-btn-submit>Enviar orden</button>
+			<p class="order-status" data-order-status aria-live="polite" hidden></p>
+		</form>
+	</div>
+</aside>
+
+<style>
+	.drawer-backdrop {
+		position: fixed;
+		inset: 0;
+		background: rgba(0,0,0,0.4);
+		z-index: 70;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s ease;
+	}
+	.cart-drawer {
+		position: fixed;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: min(420px, 100%);
+		background: var(--cream);
+		box-shadow: var(--shadow-frap);
+		z-index: 80;
+		transform: translateX(100%);
+		transition: transform 0.28s ease;
+		display: flex;
+		flex-direction: column;
+	}
+	.cart-drawer.is-open { transform: translateX(0); }
+	body.no-scroll { overflow: hidden; }
+
+	.drawer-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: var(--space-4);
+		border-bottom: 1px solid var(--ceramic);
+		background: var(--card);
+	}
+	.drawer-title { font-size: 1.2rem; color: var(--green-siren); margin: 0; }
+	.drawer-close {
+		width: 40px; height: 40px; min-height: 40px;
+		border-radius: 50%;
+		background: var(--ceramic);
+		color: var(--text-black);
+	}
+
+	.cart-list {
+		list-style: none;
+		margin: 0;
+		padding: var(--space-3) var(--space-4);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		flex: 1;
+		overflow-y: auto;
+	}
+	.cart-empty { color: var(--text-soft); }
+	/* .cart-item / .cart-item-{media,info,name,price,actions}, .cart-qty,
+	   .qty-input y .cart-remove viven en global.css — los nodos los crea
+	   el island por innerHTML y no llevan data-astro-cid. */
+
+	.drawer-footer {
+		padding: var(--space-4);
+		border-top: 1px solid var(--ceramic);
+		background: var(--card);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+	.cart-total-row { display: flex; justify-content: space-between; font-size: 1.15rem; font-weight: 600; color: var(--text-black); }
+	.cart-total { color: var(--green-siren); }
+
+	.order-form { display: flex; flex-direction: column; gap: var(--space-3); }
+	.field { display: flex; flex-direction: column; gap: var(--space-1); }
+	.field-label { font-weight: 600; color: var(--text-black); font-size: 0.9rem; }
+	.field input {
+		font-family: var(--font-body);
+		font-size: 1rem;
+		padding: 0.7rem var(--space-3);
+		border: 1px solid var(--ceramic);
+		border-radius: var(--radius-card);
+		background: var(--cream);
+		min-height: 44px;
+	}
+	.field input:focus { outline: 3px solid var(--green-accent); outline-offset: 1px; border-color: var(--green-accent); }
+	.field input.is-invalid { border-color: var(--red); }
+	.field-error { color: var(--red); font-size: 0.85rem; }
+	.btn-primary {
+		margin-top: var(--space-1);
+		background: var(--green-accent);
+		color: var(--text-white);
+		font-size: 1rem;
+		font-weight: 700;
+		padding: 0.75rem 1.5rem;
+		min-height: 48px;
+		border-radius: var(--radius-pill);
+		box-shadow: 0 0 6px rgba(0,0,0,0.24), 0 8px 12px rgba(0,0,0,0.14);
+		transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+	}
+	.btn-primary:hover { background: var(--green-uplift); }
+	.btn-primary:active { transform: scale(0.95); }
+	.order-status { margin-top: var(--space-1); font-weight: 600; }
+	.order-status.is-error { color: var(--red); }
+	.order-status.is-ok { color: #00663e; }
+</style>

@@ -1,0 +1,17 @@
+---
+// Hero — título de página centrado (jerarquía responsive)
+interface Props { title?: string; subtitle?: string; }
+const { title = 'Nuestro menú', subtitle = 'Pizzas artesanales, bebidas y postres' } = Astro.props;
+---
+<section class="hero">
+	<h1 class="page-title">{title}</h1>
+	<p class="page-subtitle">{subtitle}</p>
+</section>
+
+<style>
+	.hero { text-align: center; padding: var(--space-4) 0 var(--space-3); }
+	.page-title { font-size: 1.5rem; font-weight: 800; color: var(--green-siren); margin: 0; }
+	@media (min-width: 640px) { .page-title { font-size: 1.875rem; } }
+	@media (min-width: 1024px) { .page-title { font-size: 2.25rem; } }
+	.page-subtitle { color: var(--text-soft); margin: var(--space-1) 0 0; font-size: 1.05rem; }
+</style>

@@ -1,0 +1,50 @@
+---
+// FrapButton — botón flotante circular de carrito (elemento firma Starbucks)
+// Icono canasta SVG + contador. El island lo conecta (data-cart-frap, data-cart-count).
+const label = 'Abrir carrito';
+---
+<button class="frap-btn" data-cart-frap aria-label={label}>
+	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true">
+		<path d="M6 7h12l1.5 11a2 2 0 0 1-2 2.2h-11a2 2 0 0 1-2-2.2L6 7Z" />
+		<path d="M9 10V6a3 3 0 0 1 6 0v4" />
+	</svg>
+	<span class="frap-count" data-cart-count>0</span>
+</button>
+
+<style>
+	.frap-btn {
+		position: fixed;
+		bottom: 1.6rem;
+		right: 1.6rem;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		background: var(--green-accent);
+		color: var(--text-white);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: var(--shadow-frap);
+		z-index: 60;
+		transform: scale(1);
+		transition: transform 0.12s ease, box-shadow 0.12s ease;
+	}
+	.frap-btn:hover { transform: scale(1.05); }
+	.frap-btn:active { transform: scale(0.95); }
+	.frap-count {
+		position: absolute;
+		top: -2px;
+		right: -2px;
+		background: var(--gold-brand);
+		color: #1a1408;
+		font-size: 0.7rem;
+		font-weight: 700;
+		min-width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 4px;
+	}
+</style>

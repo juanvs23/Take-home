@@ -1,11 +1,32 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from "../app/layout/BaseLayout.astro";
+import Header from "../app/components/Header.astro";
+import Hero from "../app/components/Hero.astro";
+import MenuGrid from "../app/components/MenuGrid.astro";
+import Footer from "../app/components/Footer.astro";
+import FrapButton from "../app/components/FrapButton.astro";
+import CartDrawer from "../app/components/CartDrawer.astro";
+import OrderSuccessModal from "../app/components/OrderSuccessModal.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout>
+	<Header />
+
+	<main
+		class="container site-main mx-auto pb-[50px] lg:pb-[100px] px-2 xl:px-0"
+		data-menu-root
+	>
+		<Hero />
+		<MenuGrid />
+	</main>
+
+	<Footer />
+	<FrapButton />
+	<CartDrawer />
+	<OrderSuccessModal />
+
+	<script>
+		import { initIsland } from "../app/island";
+		initIsland();
+	</script>
+</BaseLayout>

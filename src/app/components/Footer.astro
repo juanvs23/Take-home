@@ -1,0 +1,44 @@
+---
+// Footer — bookend House Green
+interface Props {
+	text?: string;
+	repoUrl?: string;
+}
+const { text = "Alta Pinta — Pizzería · Hecho con Astro", repoUrl = "https://github.com/juanvs23/Take-home" } = Astro.props;
+---
+
+<footer class="site-footer">
+	<div class="container mx-auto">
+		<p>{text}</p>
+		<a class="repo-link" href={repoUrl} target="_blank" rel="noopener noreferrer">
+			Ver el código en GitHub ↗
+		</a>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		background: var(--green-house);
+		color: var(--text-white-soft);
+		text-align: center;
+		padding: var(--space-5) 0;
+	}
+	.site-footer p {
+		margin: 0;
+	}
+	.repo-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-1);
+		margin-top: var(--space-2);
+		color: var(--text-white-soft);
+		font-weight: 600;
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		transition: color 0.12s ease, border-color 0.12s ease;
+	}
+	.repo-link:hover {
+		color: var(--text-white);
+		border-color: var(--green-light);
+	}
+</style>

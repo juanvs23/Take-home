@@ -1,0 +1,62 @@
+---
+// Header — marca y logo (reutilizable)
+interface Props {
+	title?: string;
+	subtitle?: string;
+}
+const { title = "Alta Pinta", subtitle = "Pizza de calidad" } = Astro.props;
+---
+
+<header class="site-header">
+	<div class="container mx-auto">
+		<div class="brand py-1 px-2">
+			<img
+				src="/logo-pizzería-minimalista.svg"
+				alt="Alta Pinta"
+				class="brand-logo"
+			/>
+			<div class="brand-text">
+				<span class="brand-name">{title}</span>
+				<span class="brand-tagline">{subtitle}</span>
+			</div>
+		</div>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		background: var(--cream);
+		border-bottom: 1px solid var(--ceramic);
+	}
+	.brand {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2);
+		text-align: center;
+	}
+	.brand-logo {
+		width: 140px;
+		height: 140px;
+		object-fit: contain;
+	}
+	.brand-text {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-1);
+	}
+	.brand-name {
+		font-size: 2rem;
+		font-weight: 800;
+		color: var(--green-siren);
+		margin: 0;
+		line-height: 1.05;
+	}
+	.brand-tagline {
+		color: var(--text-soft);
+		margin: 0;
+		font-size: 1rem;
+	}
+</style>

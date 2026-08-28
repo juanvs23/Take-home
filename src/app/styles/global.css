@@ -1,0 +1,201 @@
+/* ============================================================
+   Alta Pinta — Sistema de diseño (Starbucks + marca)
+   Aplicado globalmente — proyecto sin identidad previa.
+   ============================================================ */
+
+@import "tailwindcss";
+
+/* Mapear tokens de diseño a utilitarios de Tailwind v4 */
+@theme {
+  --color-siren: #006241;
+  --color-accent: #00754A;
+  --color-house: #1E3932;
+  --color-uplift: #2b5148;
+  --color-green-light: #d4e9e2;
+  --color-gold: #c79f5a;
+  --color-cream: #f2f0eb;
+  --color-ceramic: #edebe9;
+
+  --font-display: "Manrope", system-ui, sans-serif;
+  --font-body: "Nunito Sans", system-ui, sans-serif;
+}
+
+:root {
+  /* --- Verde en 4 niveles (rol-mapeado, nunca "un solo verde") --- */
+  --green-siren:  #006241; /* títulos / señal de marca (≈ logo #016241) */
+  --green-accent: #00754A; /* píldoras rellenas (CTAs), botón carrito Frap */
+  --green-house:  #1E3932; /* franja de feature / footer (bookend oscuro) */
+  --green-uplift: #2b5148; /* acentos decorativos solamente */
+  --green-light:  #d4e9e2; /* tinte de estado válido */
+
+  /* --- Acento de marca (del logo Alta Pinta) --- */
+  --gold-brand: #c79f5a; /* borde, detalles premium, acento secundario */
+
+  /* --- Superficies — canvas crema cálido (nunca blanco puro de página) --- */
+  --cream:   #f2f0eb;
+  --ceramic: #edebe9; /* separadores de zona */
+  --card:    #ffffff;
+
+  /* --- Texto (nunca negro puro sobre claro) --- */
+  --text-black:      rgba(0, 0, 0, 0.87);
+  --text-soft:       rgba(0, 0, 0, 0.58);
+  --text-white:      #ffffff;
+  --text-white-soft: rgba(255, 255, 255, 0.70);
+
+  /* --- Semántico --- */
+  --red: #c82014; /* errores */
+
+  /* --- Radio --- */
+  --radius-card: 12px;
+  --radius-pill: 50px; /* cada botón, sin excepciones */
+
+  /* --- Elevación — sombras de baja alfa en capas, nunca una pesada --- */
+  --shadow-card: 0 0 0.5px rgba(0, 0, 0, 0.14), 0 1px 1px rgba(0, 0, 0, 0.24);
+  --shadow-frap: 0 0 6px rgba(0, 0, 0, 0.24), 0 8px 12px rgba(0, 0, 0, 0.14);
+
+  /* --- Tipografía --- */
+  --font-display: "Manrope", system-ui, sans-serif;
+  --font-body:    "Nunito Sans", system-ui, sans-serif;
+  --tracking: -0.01em; /* tracking negativo apretado en toda parte */
+
+  /* --- Escala espacial (ancla 1.6rem = 16px) --- */
+  --space-1: 0.4rem; --space-2: 0.8rem; --space-3: 1.6rem; --space-4: 2.4rem;
+  --space-5: 3.2rem; --space-6: 4rem;  --space-7: 4.8rem; --space-8: 5.6rem; --space-9: 6.4rem;
+}
+
+/* --- Base --- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--text-black);
+  letter-spacing: var(--tracking);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--tracking);
+  color: var(--green-siren);
+  margin: 0;
+}
+
+a { color: var(--green-accent); text-decoration: none; }
+
+img { display: block; max-width: 100%; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  /* El borde, radio y padding los gestionan las utilidades de Tailwind
+     (border-accent, rounded-full, px-/py-, etc.).
+     El preflight de Tailwind ya resetea el borde por defecto del navegador. */
+  min-height: 44px; /* touch target mínimo */
+  font-weight: 600;
+  letter-spacing: var(--tracking);
+}
+
+/* ============================================================
+   Carrito — elementos inyectados por JS (island.ts)
+   IMPORTANTE: van en global.css (NO scoped) porque los nodos los
+   crea el <script> con innerHTML y no heredan el data-astro-cid
+   de un <style> scoped. Si se movieran al CartDrawer.astro,
+   los items del carrito y sus controles quedarían sin estilo.
+   ============================================================ */
+.cart-item {
+  position: relative; /* ancla para el botón eliminar (absoluto) */
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--card);
+  border-radius: var(--radius-card);
+}
+.cart-item-media { width: 48px; height: 48px; border-radius: var(--radius-card); overflow: hidden; flex-shrink: 0; background: var(--ceramic); }
+.cart-item-media img { width: 100%; height: 100%; object-fit: cover; }
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-name { font-weight: 600; color: var(--text-black); font-size: 0.9rem; }
+.cart-item-price { color: var(--text-soft); font-size: 0.85rem; }
+.cart-item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  margin-right: 18px; /* deja hueco para el botón eliminar absoluto */
+}
+.cart-qty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+}
+.cart-qty button {
+  width: 34px; height: 34px; min-height: 34px;
+  border-radius: 50%;
+  background: var(--green-accent);
+  color: var(--text-white);
+  font-size: 1.15rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  transition: background 0.12s ease, transform 0.12s ease;
+}
+.cart-qty button:hover { background: var(--green-uplift); }
+.cart-qty button:active { transform: scale(0.92); }
+.qty-input {
+  width: 40px;
+  height: 34px;
+  min-height: 34px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-black);
+  background: var(--ceramic);
+  border: 1px solid var(--ceramic);
+  border-radius: var(--radius-card);
+  padding: 0;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.qty-input:focus { outline: 3px solid var(--green-accent); outline-offset: 1px; }
+.cart-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 28px; height: 28px; min-height: 28px;
+  border-radius: 50%;
+  background: var(--ceramic);
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  transition: color 0.12s ease, background 0.12s ease, transform 0.12s ease;
+  z-index: 1;
+}
+.cart-remove:hover { color: var(--red); background: rgba(200, 32, 20, 0.1); }
+.cart-remove:active { transform: scale(0.9); }
+
+/* --- Foco visible (AA) --- */
+:focus-visible {
+  outline: 3px solid var(--green-accent);
+  outline-offset: 2px;
+}
+
+/* --- Respeto de movimiento reducido --- */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

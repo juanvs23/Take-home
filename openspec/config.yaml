@@ -1,0 +1,46 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Project: Take-home — static pizza menu site (Entregable/take-home spec)
+  Tech stack: Astro 7.2.9 (static output, no adapter), TypeScript, vanilla CSS
+  Architecture: Astro static pages + one client island (cart); Google Sheets backend via Apps Script Web App
+  Backend: Google Sheets (menu tab, orders tab) + Google Apps Script (doGet menu JSON, doPost order row)
+  Design: Starbucks-inspired (npx getdesign@latest add starbucks) — Siren green #00704A, cream, rounded cards
+  Deploy: TBD (GitHub Pages / Vercel / Netlify) — live URL in README
+  Docs: /mnt/1TB/proyects/astro/docs/ (context.md, roadmap.md, chat.md)
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns
+    - Respect DESIGN.md component tokens (colors, typography, spacing)
+    - tdd: true
+    - test_command: "npx vitest run"
+  verify:
+    - test_command: "npx vitest run"
+    - build_command: "npm run build"
+
+testing:
+  strict_tdd: false
+  runner:
+    name: Vitest
+    command: npx vitest run
+  layers:
+    unit: { available: true, tool: Vitest }
+    integration: { available: false, tool: "--" }
+    e2e: { available: false, tool: "--" }
+  quality:
+    linter: { available: false, command: "--" }
+    type_checker: { available: true, command: npx astro check }
+    formatter: { available: false, command: "--" }
